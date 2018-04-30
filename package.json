@@ -1,0 +1,22 @@
+{
+  "name": "pro1",
+  "version": "1.0.0",
+  "description": "first prototype",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "bootstrap": "^4.1.0",
+    "ejs": "*",
+    "express": "*",
+    "express-validator": "*",
+    "mysql": "*",
+    "password-hash": "^1.2.2",
+    "solc": "^0.4.23",
+    "web3": "^0.20.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

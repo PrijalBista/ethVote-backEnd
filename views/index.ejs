@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<title>VOte</title>
+	<style type="text/css">
+		.first-two-blocks{
+			background: linear-gradient( rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52) ), url('images/14.jpg');
+			border-radius: 5px;
+		}
+		/*carousel-inner,margin:auto will center the images in the carousel*/
+		.carousel-inner img {
+  			margin: auto;
+		}
+
+		.myclass{
+			background-color: #eee;
+			margin:3%;
+			padding:1%;
+			border-radius: 8px;
+
+		}
+	</style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" style="border-radius: 0px;">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle btn btn-default" data-toggle="collapse" data-target="#thenavbarmenu">
+			<span class="icon-bar"></span>
+        	<span class="icon-bar"></span>
+       		<span class="icon-bar"></span> 
+		</button>
+		<a class="navbar-brand" href="#" ><span class="glyphicon glyphicon-road"></span>
+		VOte</a>
+	</div>
+	<div class="collapse navbar-collapse" id="thenavbarmenu">
+	<ul class="nav navbar-nav">
+	 <li><a href="#">Home</a></li>
+	 <li><a href="">About</a></li>
+	 <li><a href="">Profile</a></li>
+	 <!-- <form class="navbar-form pull-right" method="POST" action="">
+	 	<div class="input-group">
+	 	<input class="form-control" placeholder="Search In This sIte" />
+	 	<div class="input-group-btn">
+	 	<button class="btn btn-info"> <i class="glyphicon glyphicon-search"></i></button></div>
+	 	</div>
+	 </form> -->
+	</ul>
+	<ul class="nav navbar-nav pull-right">
+		<!-- <li><button  class="btn btn-success navbar-btn" style="margin-right: 2px;" data-toggle="modal" data-target="#loginmodal">
+		<span class="glyphicon glyphicon-log-in"></span> Login</button></li>
+	 	-<li><button  class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#registermodal"> 
+	 	<span class="glyphicon glyphicon-user"></span> Register</button></li>
+	 	<li><button  class="btn btn-success navbar-btn" style="margin-right: 2px;" data-toggle="modal" data-target="#loginmodal">   -->
+	 	</ul>
+	</div>
+</nav>
+<div id="loginmodal" class="modal fade">
+	<div class="modal-dialog modal-sm">
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+		<h3  class="modal-title">Login</h3>
+		</div>
+		<div class="modal-body">
+		<form action="./test.php" method="post">
+			
+			<div class="input-group">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			<input type="text" class="form-control" name= "usrname"/>
+			</div>
+			
+			<div class="input-group">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			<input type="password" class="form-control" name="passwd" />
+			</div><br>
+			<button type ="submit" class="btn btn-success">Login</button>
+		</form>
+		</div>
+	</div>
+	</div>
+</div>
+<div id="registermodal" class="modal fade" >
+	<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h3  class="modal-title">Register</h3>	
+		</div>
+		<div class="modal-body">
+			<form action="" method="post">
+			<div class="form-group">
+				<p class="form-control-static">Name</p>
+				<input type="text" class="form-control"/>
+				<p class="form-control-static">Email</p>
+				<input type="text" class="form-control"/>
+				<p class="form-control-static">Password</p>
+				<input type="text" class="form-control"/><br>
+				<button type ="submit" class="btn btn-danger">Submit</button>
+			</div>
+			</form>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+
+<div class="row">
+<div class="col-md-12 col-xs-12">
+<h1 class="text-center text-danger" >Voting System Management</h1><br>
+</div>
+<br><br><br><br>	
+<div class="jumbotron">
+	<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#createBallot">Create Ballot</a></li>
+  <li><a data-toggle="tab" href="#manageVoters">Manage Voters and Votes</a></li>
+  <li><a data-toggle="tab" href="#tallyVotes">Tally Votes</a></li>
+  <li><a data-toggle="tab" href="#castVotes">Cast Votes</a></li>
+  <li><a data-toggle="tab" href="#ballotInfo">Ballot Info</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="createBallot" class="tab-pane fade in active">
+    <h3>Create Ballot</h3>
+<form action="/createballot" method="post">
+			<div class="form-group">
+				<p class="form-control-static">Ballot Name No spaces</p>
+				<input type="text" class="form-control" name="ballotName" />
+				<p class="form-control-static">Candidates Name separated by comma</p>
+				<input type="text" class="form-control" name="candidateNames"/>
+
+				<button type ="submit" class="btn btn-danger">Create Ballot</button>
+			</div>
+</form>
+  </div>
+  <div id="castVotes" class="tab-pane fade">
+    <h3>Cast Vote</h3>
+    <p>Write the name of candidate and voter address</p>
+    <p class="form-control-static">Candidate Name</p>
+	<input id="voteCandidateName" type="text" class="form-control" name="candidateName"/>
+	<div class="form-group">
+  	<label for="voterAddress">Voters Address(OPTIONAL)</label>
+  	<input id="=voterAddress" tyse="text" class="form-control" name ="voterAddress"/>
+	</div>
+	<a href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>
+  </div>
+
+
+  <div id="manageVoters" class="tab-pane fade">
+  	<br><br>
+  	<h4>Registered Voters </h4>
+	<div>
+
+		<table class="table table-striped table-responsive">
+					<thead>
+						<tr>
+							<th>FullName</th>
+							<th>Username</th>
+							<th>Address</th>
+							<th>DateOfBirth</th>
+							<th>Joined</th>
+							<th>Status</th>
+							<th>Confirmation</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<% result.forEach(function(dat){ %>
+							<tr>
+							<td> <%= dat.name %> </td>
+							<td> <%= dat.username %> </td>
+							<td> <%= dat.address %> </td>
+							<td> <%= dat.dob %> </td>
+							<td> <%= dat.joined %> </td>
+							<% if ( dat.groups==0) {%>
+					<td><span id="1<%= dat.username %>">Not validated(can't Vote)</span></td>
+							<%} else {%>
+					<td><span id="1<%= dat.username %>">Validated (can Vote)</span></td>
+							<%}%>
+							<td> 
+								<button class="btn btn-primary" id="<%= dat.username %>"
+							onclick="validateVoter('<%= dat.username %>',this)" value = "<%= dat.groups %>">
+								<% if ( dat.groups==0) {%>
+								Enable Voting
+								<%} else {%>
+								Disable Voting
+								<%}%>
+
+								</button>
+							</td>
+							</tr>
+						<% }); %>
+					</tbody>
+		</table>
+	</div>
+
+<br><br>
+	<div class="jumbotrom">
+		<span id = "votingStatus">......</span>
+	</div>
+	<button type ="submit" onclick="startVoting()" class="btn btn-success">Start Voting</button>
+	<button type ="submit" onclick="endVoting()" class="btn btn-danger">End Voting</button>
+	</div>
+
+
+  <div id="tallyVotes" class="tab-pane fade">
+    <h3>Tally Vote</h3>
+    <p></p><br>
+    <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Votes</th>
+        </tr>
+      </thead>
+      <tbody>
+       <% if ( candidate!==null ) { for(var i=0; i<candidate.no; i++){ %>
+       		<tr>
+        	<td><%= candidate.candidateName[i] %></td>
+        	<td><%= candidate.votes[i]  %></td>
+        	</tr>
+        <% }} %>
+      </tbody>
+    </table>
+  </div>
+
+  </div>
+  <div id="ballotInfo" class="tab-pane fade">
+   		<h3>BallotInfo</h3>
+    	<p>Here are your ballots u posted</p>
+  </div>
+</div>
+
+
+<br><br>
+
+<br><br>
+
+
+
+
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="http://code.dappbench.com/browser-solc.min.js" type="text/javascript"></script>
+<script src="./index.js"></script>
+<script type="text/javascript">
+	function validateVoter(username,button){
+		if(confirm("DO you wanna Perform the action?? ")){
+			var update;
+			if(button.value=="0"){
+				 if(!confirm("DO you want to Enable Voting for "+username+"?")) return;
+				 update=1; 
+			} else{
+				if(!confirm("DO you want to Disable Voting for "+username+"?")) return;
+				update=0;
+			}
+			$.post("/validateVoter",
+				{username:username,update:update},
+				function(data,status){
+						alert(status);
+						if(update){
+							//can vote status in status column
+							//disable voting option in button 
+							$('#'+username).html('Disable Voting');
+							$('#1'+username).html('Validated (can Vote)');
+							$('#'+username).val('1');
+						}else{
+							$('#'+username).html('Enable Voting');
+							$('#1'+username).html('.Not Validated (cant Vote)');
+							$('#'+username).val('0');
+						}
+				});
+
+		}else{
+			alert("la thik xa teso vey");
+		}
+	}
+
+	function startVoting(){
+		if(confirm("DO YOU wanna Start Voting ?")){
+			$.post('/startVoting',{start:true},function(data,status){
+				alert(status);
+				$('#votingStatus').html('VOTING HAS STARTED');
+			});
+		}
+	}
+	function stopVoting(){
+		if(confirm("DO YOU wanna stop Voting ?")){
+			$.post('/stopVoting',{stop:true},function(data,status){
+				alert(status);
+				$('#votingStatus').html('VOTING HAS stopED');
+			});
+		}
+	}
+	function voteForCandidate(){
+	var name=$('#voteCandidateName').val();
+	$.post('/voteForCandidate',{candidateName:name},function(data,status){
+		alert(status+'fully voted :D');
+	});
+	}
+</script>
+</html>
