@@ -72,6 +72,6 @@ All tasks are handled by this server and mobile is just an interface which will 
   2. When you open it for the first time it asks for the host ip:port where you give ip of the node server you started above <br/>
     ie. ip of computer that you started your server with eg-192.168.1.101:8080 here is an screenshot <br/>
   ![app](Databases/images/app.png)<br/>
-  3. Now mobile app can only register voters and give vote. The manager has to use browser to create and manage ballots and validate        voters
+  3. Now mobile app can only register voters and give vote. The manager has to use browser to create and manage ballots and validate voters
   
  
