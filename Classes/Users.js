@@ -11,9 +11,11 @@ class Users{
 				database:Configs.mysql.database	
 		});
 
-		this.connection.connect(function(err){
-		if (err) throw err;
-		console.log("Successfully connected to the mysql..."); });
+		// this.connection.connect(function(err){
+		// if (err) throw err;
+		console.log('\x1b[33m%s\x1b[0m',"---------------------------------------------------------");
+		console.log('\x1b[33m%s\x1b[0m',"Connected to the mysql database...                      |"); //});
+		console.log('\x1b[33m%s\x1b[0m',"---------------------------------------------------------");
 
 	}
 
@@ -72,7 +74,8 @@ class Users{
 		//manage voters section 
 		 this.connection.query("SELECT * FROM users",function(err,result,fields){
 		// 	//fields has info about all datas (eg if they are char, int , length,etc)	
-			//console.log('from GetVotersList function i:D:D'+candidatesInfo.no);		
+			//console.log('from GetVotersList function i:D:D'+candidatesInfo.no);
+			if(err) throw err;	
 			response.render('index',{result:result,candidate:candidatesInfo});
 			response.end();
 
@@ -83,8 +86,8 @@ class Users{
 		var username =request.body.username;
 		var update =request.body.update;
 		this.connection.query("UPDATE users SET groups = ? Where username = ?",[update,username],function(err,result){
-		if (err) throw err;
-		response.send({success:true});
+			if (err) throw err;
+			response.send({success:true});
 	});
 	}
 

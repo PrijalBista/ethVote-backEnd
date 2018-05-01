@@ -11,7 +11,9 @@ class Blockchain{
 		 this.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 		 this.contractInstance = null;
 		 if (this.web3.isConnected()){
-		 	console.log('Connected to the blockchain database....');
+		 	console.log('\x1b[36m%s\x1b[0m','Connected to the blockchain database....                |');
+			console.log('\x1b[36m%s\x1b[0m',"---------------------------------------------------------\n");
+
 		 }else{
 		 	console.log('PROBLEM CONNECTING BLOCKCHAIN (START node using cmd  "ganache-cli" )');
 		 }
@@ -126,6 +128,10 @@ class Blockchain{
 
 	}
 	VoteStarted(request,response,callback){
+		if(this.contractInstance===null){
+			response.send({'success':false,'message':'Ballot not Published'});
+			return ;// dont run code below this 
+		}
 		this.contractInstance.voteStarted({},function(err,voteStarted){
 			if(voteStarted){
 				callback();

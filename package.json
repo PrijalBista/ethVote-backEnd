@@ -12,6 +12,7 @@
     "ejs": "*",
     "express": "*",
     "express-validator": "*",
+    "my-local-ip": "^1.0.0",
     "mysql": "*",
     "password-hash": "^1.2.2",
     "solc": "^0.4.23",
