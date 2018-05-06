@@ -19,8 +19,7 @@ class Blockchain{
 		 }
 	}
 
-
-    CreateBallot(request,response){
+    CreateBallot(request,response,callback){
 		var ballotName = request.body.ballotName;
 		var votersAddress = request.body.votersAddress;
 		var candidateNames = request.body.candidateNames.split(",");
@@ -32,7 +31,7 @@ class Blockchain{
 		//VotingContract = new web3.eth.contract(abiDefinition);
 		var VotingContract = this.web3.eth.contract(abiDefinition);
 	  	var byteCode = compiledCode.contracts[':Voting'].bytecode;
-	  	var deployedContract = VotingContract.new(ballotName,candidateNames,{data: byteCode, from: this.web3.eth.accounts[0], gas: 4700000},function(err,contract){
+	  	var deployedContract=VotingContract.new(ballotName,candidateNames,{data: byteCode, from: this.web3.eth.accounts[0], gas: 4700000},function(err,contract){
 	  		if(!err){
 	  			//NOTE: the callback will fire twice
 	  			//Once the contract has the transactionHash property set and once its deployed on an address.
@@ -40,9 +39,9 @@ class Blockchain{
 	  				//this condition is for when transactionHash is set
 	  				//console.log("transaction hash "+contract.transactionHash);
 	  			}else{
-	  				console.log('Contract Deployed Successfully address'+contract.address)
+	  				console.log('Contract Deployed Successfully address: '+contract.address)
 	  				response.redirect("/manager");
-	  				return true;
+	  				callback(contract);
 	  			}
 	  		}else{
 	  			console.log(err);
@@ -50,12 +49,15 @@ class Blockchain{
 	  			return null;
 	  		}
 	  	});
-	  	this.contractInstance = deployedContract;
-	  	return  this.contractInstance;
+	  	this.contractInstance=deployedContract;
+	  	//console.log('blockchain instance'+ this.contractInstance);
 	}
 
 
 	StartVoting(request,response){
+		if(this.contractInstance===null){
+			console.log("no instance");
+		}
 		this.contractInstance.startVoting({from:this.web3.eth.accounts[0]},function(){
 			console.log(' \n VOTING STARTEd.........D');
 			response.send({success:true});
@@ -138,8 +140,6 @@ class Blockchain{
 			}else response.send({'success':false,'message':'Voting Has Not started Yet'});
 		});
 	}
-
-
 };
 
 module.exports = Blockchain;

@@ -3,23 +3,28 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var ip = require('my-local-ip');
-//Users helps to communicate with mysql database
-var Users = require('./Classes/Users');
-var users = new Users();
 
-//blockchain module helps in performing blockchain operations and queries
-var BlockChain = require('./Classes/Blockchain');
-var blockchain = new BlockChain();
-//this holds contract address of the BALLOT WE DEPLOYED
-var contractInstance=null;
-
-
+ // this is required for https connection-----------------
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var options = {
+  key: fs.readFileSync('./keys/client-key.pem'),
+  cert: fs.readFileSync('./keys/client-cert.pem')
+};
+//-------------------------------------------------------
+//---Our Voting System major components Verifier and BallotRegulator 
+var Verifier = require('./Classes/Verifier');
+var verifier = new Verifier();
+var BallotRegulator = require('./Classes/BallotRegulator');
+var ballotRegulator = new BallotRegulator();
 
 //initializing express app express module returns function and that func returns application instance
+// Create a service (the app object is just a callback).
 var app = express();
 //app holds that application instance and all server communications are handled by it
 
-//View Engine middleware
+//View Engine middleware used to display htmlpages for manager webpage
 app.set('view engine','ejs'); 
 app.set('views',path.join(__dirname, 'views'));
 
@@ -30,93 +35,65 @@ app.use(bodyParser.urlencoded({extended:false}));
 //Set static path ( path where we keep our css js files)
 app.use(express.static(path.join(__dirname,'public')));
 
+
+/*--------------------Routes for all manager actions------------------------------- */
+
 //route for the landing page/homepage/firstpage
 app.get('/',function(request,response){
  response.redirect('/manager');
- if(contractInstance!==null){
- 	console.log(contractInstance.address);
- }else{
-	 console.log("No contract Yet");
- }
 });
 
-
-/*--------------------Routes for all manager actions------------------------------- */
 app.get('/manager',function(request,response){
-
-	var candidatesInfo = null;
-	if(contractInstance!==null){
-		candidatesInfo = blockchain.GetCandidateList();
-	//load all candidates and there votes in real time	
-	}
-	users.GetVotersList(request,response,candidatesInfo);
-	//response.render('index',{result:result,candidate:candidatesInfo});
-	//	response.end();
+	ballotRegulator.LoadManagerPage(request,response);
 });
 
 app.post('/validateVoter',function(request,response){
-	users.ValidateVoter(request,response);
+	verifier.ValidateVoter(request,response);
 });
 
 app.post('/createballot',function(request,response){
-
-	contractInstance = blockchain.CreateBallot(request,response);
+	ballotRegulator.CreateBallot(request,response);
 });
 
 app.post('/startVoting',function(request,response){
-	blockchain.StartVoting(request,response);
+	ballotRegulator.StartVoting(request,response);
 });
 
 app.post('/stopVoting',function(request,response){
-	blockchain.StopVoting(request,response);
+	ballotRegulator.StopVoting(request,response);
 });
 
 app.post('/voteForCandidate',function(request,response){
-	blockchain.VoteStarted(request,response,function(){
-		blockchain.VoteForCandidate(request,response,manager=true);
-	});
+	ballotRegulator.TestingVoteForCandidate();
+});
+
+app.post('/voteStarted',function(request,response){
+	ballotRegulator.GetBallotStatus(request,response);
 });
 /*-------------------------------------------------------------------------*/
 
 
-
 // ----------------- Routes for all Voters(mobile app) --------------//
 
-app.post('/m/voteForCandidate',function(request,response){
-	blockchain.VoteStarted(request,response,function(){
-		users.UserCanVote(request,response,function(success){
-		if(success){
-	 		blockchain.VoteForCandidate(request,response,manager=false);
-		}
-		else response.send({'success':false,'message':'U are not validated To vote yet'});
-		});		
-	});
-
-	
-});
-
-
-app.post('/m/getEthereumAddress',function(request,response){
-	users.UserCanVote(request,response,function(success){
-		if(success){
-	 		blockchain.GetNewAccount(request,response,function(ethPassword,ethAddr){
-	 			users.RegisterEthAddress(ethPassword,ethAddr,response);
-	 		});
-			console.log(request.body.username+' Request to get Ethereum address');
-
-	 	}
-			else response.send({'success':false,'message':'U are not validated To vote yet'});	
-	});
-});
-
 app.post('/voterreg',function(request,response){
-	users.RegisterVoter(request,response);
+	verifier.RegisterVoter(request,response);
 });
-
 
 app.post('/voterlogin',function(request, response){
-	users.LoginVoter(request,response);
+	verifier.LoginVoter(request,response);	
+});
+
+app.post('/m/voteForCandidate',function(request,response){
+	ballotRegulator.VoteForCandidate(request,response);
 	
+});
+
+app.post('/m/getBallotRequest',function(request,response){	
+	ballotRegulator.RequestForBallot(request,response);
+});
+
+app.post('/m/getEthereumAddress',function(request,response){
+	verifier.GetEthereumAddress(request,response);
 });
 
 //---------------------------------------------------------------------------//
@@ -133,11 +110,15 @@ app.get('/getImage/:fileName',function(req,res) {
 //...............................................................................//
 
 
-//server listening to port 8080 you can change the port from here
-app.listen(8080,function(){
-	console.log("\x1b[1m","Server Started:                                        |");
-	console.log("\x1b[1m","Visit http://localhost:8080 in your computer           |")
-	console.log("\x1b[1m","Put this address on your app  "+ip()+":8080             ");
-	console.log("\x1b[1m","\n---------------------------------------------------------\n");
+// // Create an HTTP service.
+ http.createServer(app).listen(8080,function(){
+ 	console.log("\x1b[1m","Visit http://localhost:8080 in your computer           |")
+ 	console.log("\x1b[1m","Put this address on your app  "+ip()+":8080             ");
+	console.log("\x1b[1m","---------------------------------------------------------");
 
-});
+ });
+// // Create an HTTPS service identical to the HTTP service.
+ https.createServer(options, app).listen(443,function(){
+ 	console.log(' ALso added new https server ');
+ 	console.log("\x1b[1m","Visit https://localhost:443  in your computer           |")
+ });
