@@ -35,8 +35,7 @@ All tasks are handled by this server and mobile is just an interface which will 
   Then select voting database<br/>
   ![voting](Databases/images/voting.png)<br/>
   import tables: Go to import options choose file from  EthVote-backEnd/Databases/voting.sql<br/>
-  ![import](Databases/images/import.png)<br/>
-  scroll down and click go Now you can see the tables users(stores registered Voters ) and address tables<br/>
+  scroll down and click ```Go``` Now you can see the tables users(stores registered Voters ) and address tables<br/>
   
   >Inside ethVote-backEnd/Classes there is a file ConfigsTemplate.js which has following structure.<br/>
   
@@ -56,14 +55,16 @@ All tasks are handled by this server and mobile is just an interface which will 
  Set host, user,password,.. etc according to your mysql configuration and then save the file as **Configs.js** <br/>
  >DONT rename or delete ConfigsTemplate.js just copy it and make another file named Config.js <br/>
  
- ##### Starting node server ()
+ ##### Starting node server
   1. First run mysql server by opening xampp control panel and starting mysql and apache service.
   2. Open command prompt from anywhere and type<br/>
                           ```ganache-cli``` <br/>
       this will start local blockchain database in your computer NOTE: **donot close this cmd prompt (blockchain db will stop)**
   3. Open command prompt on your project directory (```SHIFT+RIGHT CLICK``` on project directory) and type <br/>
                          ```nodemon app``` <br/>
-      server will be started on [http://localhost:8080]  NOTE:**DONOT close this command prompt (server will stop)<br/>
+      server will be started on http://localhost:8080  <br/>
+      New Https server added https://localhost:443  with self signed certificate <br/>
+      NOTE:**DONOT close this command prompt (server will stop)<br/>
       
 
   #### Using the app
