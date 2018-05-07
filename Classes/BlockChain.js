@@ -8,6 +8,7 @@ var fs = require('fs');
 class Blockchain{
 
 	constructor(){
+		 // use http://localhost:7545 for ganache-gui
 		 this.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 		 this.contractInstance = null;
 		 if (this.web3.isConnected()){
@@ -60,14 +61,14 @@ class Blockchain{
 		}
 		this.contractInstance.startVoting({from:this.web3.eth.accounts[0]},function(){
 			console.log(' \n VOTING STARTEd.........D');
-			response.send({success:true});
+			response.send({'success':true,'message':'Voting has Started'});
 		});
 	}
 
 	StopVoting(request,response){
 		this.contractInstance.startVoting({from:this.web3.eth.accounts[0]},function(){
 			console.log(' \n VOTING SToped.........D');
-			response.send({success:true});
+			response.send({'success':true,'message':'Voting has Stopped'});
 		});
 
 	}

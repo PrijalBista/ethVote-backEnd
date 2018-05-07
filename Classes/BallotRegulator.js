@@ -65,7 +65,7 @@ class BallotRegulator{
 		}
 	}
 
-	TestingVoteForCandidate(){
+	TestingVoteForCandidate(request,response){
 		blockchain.VoteStarted(request,response,function(){
 			blockchain.VoteForCandidate(request,response,manager=true);
 		});	

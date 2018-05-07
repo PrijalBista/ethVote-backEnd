@@ -64,7 +64,7 @@ app.post('/stopVoting',function(request,response){
 });
 
 app.post('/voteForCandidate',function(request,response){
-	ballotRegulator.TestingVoteForCandidate();
+	ballotRegulator.TestingVoteForCandidate(request,response);
 });
 
 app.post('/voteStarted',function(request,response){
