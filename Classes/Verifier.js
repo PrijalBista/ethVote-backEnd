@@ -2,7 +2,7 @@
 var Users = require('./Users');
 var users= new Users()
 //blockchain module helps in performing blockchain operations and queries
-var Blockchain = require('./Blockchain');
+var Blockchain = require('./BlockChain');
 var blockchain= new Blockchain();
 class Verifier{
 	RegisterVoter(request,response){

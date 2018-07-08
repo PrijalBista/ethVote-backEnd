@@ -1,4 +1,4 @@
-var Blockchain = require('./Blockchain');
+var Blockchain = require('./BlockChain');
 var blockchain = new Blockchain();
 var Users = require('./Users');
 var users = new Users();
@@ -67,7 +67,7 @@ class BallotRegulator{
 
 	TestingVoteForCandidate(request,response){
 		blockchain.VoteStarted(request,response,function(){
-			blockchain.VoteForCandidate(request,response,manager=true);
+			blockchain.VoteForCandidate(request,response,true);
 		});	
 	}
 	
