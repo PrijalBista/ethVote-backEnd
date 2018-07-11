@@ -219,7 +219,7 @@
 
   <div id="tallyVotes" class="tab-pane fade">
     <h3>Tally Vote</h3>
-	<button onclick="tallyVotes()" class="btn btn-danger">Tally Votes</button>
+	<button onclick="tallyVotes()" class="btn btn-danger">End Voting</button>
     <p></p><br>
     <div class="table-responsive">
     <table class="table table-bordered">
@@ -229,7 +229,13 @@
           <th>Votes</th>
         </tr>
       </thead>
-      <tbody id ="tallyVotesTableData">
+      <tbody>
+       <% if ( candidate!==null ) { for(var i=0; i<candidate.no; i++){ %>
+       		<tr>
+        	<td><%= candidate.candidateName[i] %></td>
+        	<td><%= candidate.votes[i]  %></td>
+        	</tr>
+        <% }} %>
       </tbody>
     </table>
   </div>

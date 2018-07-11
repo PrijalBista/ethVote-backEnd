@@ -6,13 +6,23 @@ class BallotRegulator{
 	constructor() {
 		this.contractInstance=null;
 	}
-	LoadManagerPage(request,response){
-		var candidatesInfo = null;
+	getCandidateList(request,response){
 		if(this.contractInstance!==null){
-			candidatesInfo = blockchain.GetCandidateList();
-	//load all candidates and there votes 	
-		}
-		users.GetVotersList(request,response,candidatesInfo);
+			let candidatesInfo = blockchain.GetCandidateList();
+			//load all candidates and there votes 	
+			response.send({'success':true,'data':candidatesInfo});
+		}else{
+			response.send({'success':false,'message':'no ballot published'});
+		}		
+	}
+	LoadManagerPage(request,response){
+		//var candidatesInfo = null;
+	// 	if(this.contractInstance!==null){
+	// 		candidatesInfo = blockchain.GetCandidateList();
+	// //load all candidates and there votes 	
+	// 	}
+		//users.GetVotersList(request,response,candidatesInfo);
+		users.GetVotersList(request,response);
 	//response.render('index',{result:result,candidate:candidatesInfo});
 	//	response.end();
 	}

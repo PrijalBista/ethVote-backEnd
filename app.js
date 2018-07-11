@@ -70,6 +70,10 @@ app.post('/voteForCandidate',function(request,response){
 app.post('/voteStarted',function(request,response){
 	ballotRegulator.GetBallotStatus(request,response);
 });
+
+app.post('/getCandidateList',function(request,response){
+	ballotRegulator.getCandidateList(request,response);
+});
 /*-------------------------------------------------------------------------*/
 
 

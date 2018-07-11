@@ -7,13 +7,13 @@ contract Voting {
   an unsigned integer to store the vote count
   */
   
-  mapping (bytes32 => string) private votesReceived;
+  mapping (bytes32 => uint8) public votesReceived;
   
   /* Solidity doesn't let you pass in an array of strings in the constructor (yet).
   We will use an array of bytes32 instead to store the list of candidates
   */
   
-  bytes32[] private candidateList;
+  bytes32[] public candidateList;
 
   address ballotCreater;
   bool canVote;
@@ -65,24 +65,19 @@ contract Voting {
   }
 
   // This function returns the total votes a candidate has received so far
-  function totalVotesFor(bytes32 candidate) view public returns (string) {
+  function totalVotesFor(bytes32 candidate) view public returns (uint8) {
     require(validCandidate(candidate));
     return votesReceived[candidate];
   }
 
   // This function increments the vote count for the specified candidate. This
   // is equivalent to casting a vote
-//   function voteForCandidate(bytes32 candidate) public payable chkVotingState {
-//     require(validCandidate(candidate));
-//     require(chkDoubleVote());
-//     votesReceived[candidate] += 1;
-//     usersWhoVoted.push(msg.sender);
-//   }
-    function voteForCandidate(bytes32 candidate, string vote) public payable chkVotingState{
-        require(validCandidate(candidate));
-        //require(chkDoubleVote);
-        votesReceived[candidate] = vote;
-    }
+  function voteForCandidate(bytes32 candidate) public payable chkVotingState {
+    require(validCandidate(candidate));
+    require(chkDoubleVote());
+    votesReceived[candidate] += 1;
+    usersWhoVoted.push(msg.sender);
+  }
 
   function validCandidate(bytes32 candidate) view public returns (bool) {
     for(uint i = 0; i < candidateList.length; i++) {

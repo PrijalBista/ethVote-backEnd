@@ -14,7 +14,6 @@ class Blockchain{
 		 // use http://localhost:7545 for ganache-gui
 		 this.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 		 this.contractInstance = null;
-		 this.ballotName=null;
 		 if (this.web3.isConnected()){
 		 	console.log('\x1b[36m%s\x1b[0m','Connected to the blockchain database....                |');
 			console.log('\x1b[36m%s\x1b[0m',"---------------------------------------------------------\n");
@@ -56,7 +55,6 @@ class Blockchain{
 	  		}
 	  	});
 	  	this.contractInstance=deployedContract;
-	  	this.ballotName=ballotName;
 	  	//console.log('blockchain instance'+ this.contractInstance);
 	}
 
@@ -84,43 +82,32 @@ class Blockchain{
 		if(mykey!==null){
 			if(previousVote==''){
 				console.log('noOne voted yet');
-				let x =mykey.encrypt('1');
-				return x;
+				var x =mykey.encrypt("lel");
 			}else{
-				let p =mykey.decrypt(previousVote);
-				console.log("old vote : "+p);
-				p = parseInt(p);
-				p++;
-				console.log("newvote :"+p);
-				let x = mykey.encrypt(String(p));
-				return x;
+
 			}
 		}else{console.log("key is null");}	
 	}
 	
 	VoteForCandidate(request,response,manager){
 		var name=request.body.candidateName;
-		var ballotName = request.body.ballotName || this.ballotName;
+		var ballotName = request.body.ballotName;
 		if (manager){
 			let previousVote = this.contractInstance.totalVotesFor(name);
 			let updatedVote=this.updateVote(ballotName,previousVote);
 			if(updatedVote!==null){
-				this.contractInstance.voteForCandidate(name,updatedVote,{from:this.web3.eth.accounts[2], gas: 4700000},function(){
-					console.log('Manager Voted ');
+				this.contractInstance.voteForCandidate(name,{from:this.web3.eth.accounts[2]},function(){
+					console.log('Manager Voted');
 					response.send({'success':true,'message':'successfully voted for '+name});
-					//console.log(this.contractInstance.totalVotesFor(name).string);		
-
-				});
+				});		
 			}else{console.log("err updating vote");}
 		}
 		else{
-			let previousVote = this.contractInstance.totalVotesFor(name);
-			let updatedVote=this.updateVote(ballotName,previousVote);
 			var ethAddr = request.body.ethAddress;
 			var ethPass = request.body.ethPassword;
 			this.web3.personal.unlockAccount(ethAddr,ethPass,()=>{
-				this.contractInstance.voteForCandidate(name,updatedVote,{from:ethAddr,gas:4700000},function(){
-					//console.log('SOmeone Voted just now :O  ..VOTE ADDED FOR  '+name);
+				this.contractInstance.voteForCandidate(name,{from:ethAddr},function(){
+					console.log('SOmeone Voted just now :O  ..VOTE ADDED FOR  '+name);
 					response.send({'success':true,'message':'successfully voted for'+name});
 				});
 			});
@@ -129,18 +116,13 @@ class Blockchain{
 	}
 
 	GetCandidateList(){
-	 if(this.contractInsance!==null && this.ballotName!==null){
 		var no =this.contractInstance.candidateNo();
-		var mykey=ballots.getKey(this.ballotName);
 		var candidates = [];
 		var votes = [];
 		var i;
 		for(i=0;i<no;i++){
 			candidates[i]= this.contractInstance.candidateName(i);
-			votes[i] = this.contractInstance.totalVotesFor(candidates[i]);
-			if(mykey!==null){
-				votes[i]=mykey.decrypt(votes[i]);
-			}
+			votes[i] = this.contractInstance.totalVotesFor(candidates[i]).toNumber();
 			candidates[i] = this.web3.toAscii(candidates[i]).toLocaleString();
 		}
 		
@@ -151,7 +133,6 @@ class Blockchain{
 				votes:votes	
 		};
 		return result;
-	  }else{console.log("contractInstance empty");}
 	}
 
 	GetNewAccount(request,response,callback){

@@ -30,30 +30,47 @@ function validateVoter(username,button){
 		}
 	}
 
-	function startVoting(){
+function startVoting(){
 		if(confirm("DO YOU wanna Start Voting ?")){
 			$.post('/startVoting',{start:true},function(data,status){
 				alert(data.message);
 				$('#votingStatus').html('Voting has Started');
 			});
 		}
-	}
-	function stopVoting(){
+}
+function stopVoting(){
 		if(confirm("DO YOU wanna stop Voting ?")){
 			$.post('/stopVoting',{stop:true},function(data,status){
 				alert(data.message);
 				$('#votingStatus').html('Voting has Stoped');
 			});
 		}
-	}
-	function voteForCandidate(){
+}
+function voteForCandidate(){
 	var name=$('#voteCandidateName').val();
-	$.post('/voteForCandidate',{candidateName:name},function(data,status){
+	var ballotName = $('#ballotName').val();
+	$.post('/voteForCandidate',{ballotName:ballotName,candidateName:name},function(data,status){
 		alert(status+'fully voted :D');
 	});
-	}
+}
 
-
+function tallyVotes(){
+	var tb = $('#tallyVotesTableData');
+	tb.html('loading');
+	$.post('/getCandidateList',{},function(response,status){
+		if(status && response.success){
+			var candidate=response.data;
+			var str="";
+			for(i=0;i<candidate.no;i++){
+				str+="<tr>";
+				str= str+"<td>"+candidate.candidateName[i]+"</td>";
+				str= str + "<td>"+candidate.votes[i]+"</td>";
+				str+="</tr>";
+			}
+			tb.html(str);
+		}else{tb.html(response.message);}
+	});
+}
 
 
 //this code will run automatically after the page loads
