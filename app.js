@@ -3,7 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var ip = require('my-local-ip');
-
+var session = require('express-session');
  // this is required for https connection-----------------
 var http = require('http');
 var https = require('https');
@@ -18,7 +18,8 @@ var Verifier = require('./Classes/Verifier');
 var verifier = new Verifier();
 var BallotRegulator = require('./Classes/BallotRegulator');
 var ballotRegulator = new BallotRegulator();
-
+var Admin = require('./Classes/Admin');
+var admin = new Admin();
 //initializing express app express module returns function and that func returns application instance
 // Create a service (the app object is just a callback).
 var app = express();
@@ -28,6 +29,17 @@ var app = express();
 app.set('view engine','ejs'); 
 app.set('views',path.join(__dirname, 'views'));
 
+app.use(session({
+    secret: 'cookie_secret',
+    name: 'cookie_name',
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(function(req, res, next) { //making session variable available in response ie in ejs views
+  res.locals.username = req.session.username;//locals ma save garepaxi templates ma sidhai username variable use garna milxa
+  next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -37,35 +49,59 @@ app.use(express.static(path.join(__dirname,'public')));
 
 
 /*--------------------Routes for all manager actions------------------------------- */
-
+app.use('/admin',function(request,response,next){ //middleware to check login status
+	if(request.session.username==null){
+		//console.log("not logged in");
+		response.redirect('/');
+	}else{
+	next();
+	}
+});
 //route for the landing page/homepage/firstpage
 app.get('/',function(request,response){
- response.redirect('/manager');
+ 	//response.render('index',{result:result,candidate:null});
+ 	response.render('index');
+ 	response.end();
 });
-
-app.get('/manager',function(request,response){
+app.post('/adminLogin',function(request,response){
+	admin.adminLogin(request,response);
+});
+app.get('/admin/manager',function(request,response){
 	ballotRegulator.LoadManagerPage(request,response);
 });
 
-app.post('/validateVoter',function(request,response){
+app.post('/admin/validateVoter',function(request,response){
 	verifier.ValidateVoter(request,response);
 });
 
-app.post('/createballot',function(request,response){
+app.post('/admin/createballot',function(request,response){
 	ballotRegulator.CreateBallot(request,response);
 });
+app.post('/admin/activateBallot',function(request,response){
+	ballotRegulator.SelectBallot(request,response);
+});
 
-app.post('/startVoting',function(request,response){
+app.post('/admin/startVoting',function(request,response){
 	ballotRegulator.StartVoting(request,response);
 });
 
-app.post('/stopVoting',function(request,response){
+app.post('/admin/stopVoting',function(request,response){
 	ballotRegulator.StopVoting(request,response);
 });
 
-app.post('/voteForCandidate',function(request,response){
+app.post('/admin/voteForCandidate',function(request,response){
 	ballotRegulator.TestingVoteForCandidate(request,response);
 });
+
+app.get('/admin/logout',function(request,response){
+	request.session.destroy(function(err) {
+	  if(err) {
+	    console.log(err);
+	  } else {
+	    response.redirect('/');
+	  }
+	});
+})
 
 app.post('/voteStarted',function(request,response){
 	ballotRegulator.GetBallotStatus(request,response);
@@ -75,7 +111,9 @@ app.post('/getCandidateList',function(request,response){
 	ballotRegulator.getCandidateList(request,response);
 });
 /*-------------------------------------------------------------------------*/
-
+app.get('/land',function(req,res){
+	res.render('adminDashboard');
+});
 
 // ----------------- Routes for all Voters(mobile app) --------------//
 

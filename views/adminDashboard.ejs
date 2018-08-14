@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Parallax Template - Materialize</title>
+  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+  
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <!-- <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js" ></script>
+
+  <style type="text/css">
+  	.tabs{
+  	height: auto;
+  	white-space: normal;
+  	}
+  	.tab{
+  	display: block;
+  	width: 100%;
+  	border-bottom: 1px solid #f0f0f0;
+  	}
+  	.tab-content{
+  	height: 200px;
+  	width: 100%;
+  	background: #fcfcfc;
+  	border:1px solid #f0f0f0;
+  	}
+  	.indicator{
+  	display: none;
+  	}
+  </style>
+</head>
+<body>
+	<!-- navbar -->
+	<nav>
+	    <div class="nav-wrapper white">
+	      <a href="#!" class="brand-logo black-text">EthVote</a>
+	      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+	      <ul class="right hide-on-med-and-down black-text">
+	        <li><a href="#test1" class="black-text">About</a></li>
+	        <li><a href="badges.html"class="black-text"></a></li>
+	        <li><a href="collapsible.html" class="black-text">User</a></li>
+	        <li><a href="/admin/logout" class="black-text">Logout</a></li>
+	      </ul>
+	    </div>
+	  </nav>
+
+	  <ul class="sidenav" id="mobile-demo">
+	    <li><a href="sass.html">Sass</a></li>
+	    <li><a href="badges.html">Components</a></li>
+	    <li><a href="collapsible.html">Javascript</a></li>
+	    <li><a href="mobile.html">Mobile</a></li>
+	  </ul>
+	          
+	<!-- page laout  -->
+	<div class="row">
+		<!-- sidebar layout -->
+	    <div class="col m3 hide-on-med-and-down">
+	      <ul class="tabs black-text">
+	        <li class="tab">
+	        	<a href="#test1" class="black-text left-align">
+
+	        		<i class="material-icons" style="vertical-align: middle">home</i>
+	        		Overview
+	        	</a>
+	        </li>
+	        <li class="tab">
+	        	<a class="active black-text left-align" href="#test2">
+	        		<i class="material-icons" style="vertical-align: middle" >streetview</i>
+	        		Profile
+	        	</a>
+	        </li>
+	        <li class="tab">
+	        	<a href="#test3" class="black-text left-align">
+	        	<i class="material-icons" style="vertical-align: middle" >add</i>	
+	        	Create Ballot
+	        	</a>
+	    	</li>
+	        <li class="tab">
+	        	<a href="#test4" class="black-text left-align">
+	        	<i class="material-icons" style="vertical-align: middle" >storage</i>	
+	        	Manage Voters
+	    		</a>
+	    	</li>
+	        <li class="tab">
+	        	<a href="#test5" class="black-text left-align">
+	        	<i class="material-icons" style="vertical-align: middle" >timelinee</i> 	Tally Votes
+	        	</a>
+	    	</li>
+	        <li class="tab">
+	        	<a href="#test6" class="black-text left-align">
+	        	<i class="material-icons" style="vertical-align: middle" >settings</i>	
+	        	Settings
+	    		</a>
+			</li>
+	      </ul>
+	    </div>
+
+	    <!-- content layout -->
+	    <div class="col m9">
+	      <div id="test1" class="col tab-content">
+	      	<!-- start of Overview COntent -->
+	      	<div class="row">
+	      		<div class="col s12">
+	      			<table class="table table-striped table-responsive">
+	      				<thead>
+	      					<tr>
+	      						<th>BallotID</th>
+	      						<th>BallotName</th>
+	      						<th>EthAddress</th>
+	      						<th>Set As active</th>
+	      						<!-- <th>Joined</th>
+	      						<th>Status</th>
+	      						<th>Confirmation</th> -->
+	      					</tr>
+	      				</thead>
+	      				<tbody>
+
+	      					<% ballots.forEach(function(ballot){ %>
+	      					<tr>
+	      						<td><%= ballot.Id %></td>
+	      						<td><%= ballot.ballotName %></td>
+	      						<td><%= ballot.ballotAddress %></td>
+	      						<td><button id="activate-ballot" value="<%= ballot.ballotAddress %>" onclick="activateBallot(this.value,'<%=ballot.ballotName%>')">Activate Ballot</button></td>
+	      					</tr>
+	      					<% }); %>
+	      			</table>
+	      		</div>
+	      		
+	      	</div>
+	      </div>
+	      <div id="test2" class="col tab-content">
+	      	<!-- start of Profile content -->
+	      	<div class="row">
+	      	    <div class="col s12 m7">
+	      	      <div class="card">
+	      	        <div class="card-image">
+	      	          <img src="images/3.jpg">
+	      	          <span class="card-title">Admin</span>
+	      	        </div>
+	      	        <div class="card-content">
+	      	          <p>UserName : Admin</p>
+	      	        </div>
+	      	        <div class="card-action">
+	      	          <a href="#">Change your default password</a>
+	      	        </div>
+	      	      </div>
+	      	    </div>
+	      	    <div class="col s12 m5">
+				    <div class="card-panel teal">
+				      <span class="white-text">This is admin profile where u can see your details and change them. You can create ballot from the menu in side bar then fill up the form for ballot name, candidates and start stop time. The ballot will then get initialized in the blockchain.
+				      </span>
+				    </div>
+	      	    </div>
+	      	  </div>
+	  	  </div>   <!--end of Profile content  --> 
+
+	      <div id="test3" class="col tab-content">
+	      	<!-- start of create ballot contecnt -->
+	      	<h3 class="cyan-text lighten-3">Create Ballot</h3>
+	      	<form class="col s12" action="/admin/createballot" method="POST">
+	      		<div class="row">
+	      			<div class="input-field col s12">
+	      			    <input id="ballotName" type="text" class="validate" name="ballotName">
+	      			    <label for="ballotName">Ballot Name</label>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      			<div class="input-field col s12">
+	      				<input id="candidates" type="text" class="validate" name="candidateNames">
+	      		    	<label for="candidates">Candidate Names</label>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      			<div class="input-field col s3">
+	      				<input id="startDate" type="text" class="datepicker">
+	      				<label for="startDate">Select Start Date</label>
+	      			</div>
+	      			<div class="input-field col s3">
+	      				<input id="startTime" type="text" class="timepicker">
+	      				<label for="startTime">Select Start Time</label>
+	      			</div>
+	      			<div class="input-field col s3">
+	      				<input id="stopDate" type="text" class="datepicker">
+	      				<label for="stopDate">Select Stop Date</label>
+	      			</div>
+	      			<div class="input-field col s3">
+	      				<input id="stopTime" type="text" class="timepicker">
+	      				<label for="stopTime">Select Stop Time</label>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      			<button class="btn waves-effect waves-light teal lighten-1">Create Ballot</button>
+	      		</div>
+	      	</form>
+	  	  </div><!-- end of create ballot div-->
+	      <div id="test4" class="col tab-content">
+	      	<!-- manage voters content -->
+	      	<div class="row">
+	      		<div class="col s12">
+	      			<button class="btn">Add Verified Voters List</button>
+	      		</div>
+	      	</div>
+	      	<div class="row">
+	      		<div class="col s12">
+	      			<table class="striped responsive-table">
+	      						<thead>
+	      							<tr>
+	      								<th>FullName</th>
+	      								<th>Username</th>
+	      								<th>Address</th>
+	      								<th>DateOfBirth</th>
+	      								<th>Joined</th>
+	      								<th>Status</th>
+	      								<th>Confirmation</th>
+	      							</tr>
+	      						</thead>
+	      						<tbody>
+
+	      							<%if(true){ result.forEach(function(dat){ %>
+	      								<tr>
+	      								<td> <%= dat.name %> </td>
+	      								<td> <%= dat.username %> </td>
+	      								<td> <%= dat.address %> </td>
+	      								<td> <%= dat.dob %> </td>
+	      								<td> <%= dat.joined %> </td>
+	      								<% if ( dat.groups==0) {%>
+	      						<td><span id="1<%= dat.username %>">Not validated(can't Vote)</span></td>
+	      								<%} else {%>
+	      						<td><span id="1<%= dat.username %>">Validated (can Vote)</span></td>
+	      								<%}%>
+	      								<td> 
+	      									<button class="btn btn-primary" id="<%= dat.username %>"
+	      								onclick="validateVoter('<%= dat.username %>',this)" value = "<%= dat.groups %>">
+	      									<% if ( dat.groups==0) {%>
+	      									Enable Voting
+	      									<%} else {%>
+	      									Disable Voting
+	      									<%}%>
+
+	      									</button>
+	      								</td>
+	      								</tr>
+	      							<% }); } %>
+	      						</tbody>
+	      			</table>
+	      		</div>
+	      	</div>
+	      	<!--  -->
+	      </div>
+	      <div id="test5" class="col tab-content">
+	      <!-- start of tally votes content -->
+	      		<div class="row">
+	      			<div class="col s9">
+	      			<p class="blue-text lighten-3 center-align">VOTING RESULT</p><hr/>
+	      			<canvas id="votesCount"></canvas>
+	      			</div>
+	      			<div class="col s3">
+	      				<button class="btn" onclick="tallyVotes()">Refresh</button>
+	      				<button class="btn" onclick="startVoting()">Start Voting</button>
+	      				<button class="btn" onclick="stopVoting()">Stop Voting</button>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      			<div class="col s4">
+	      			<p class="red-text darken-3 center-align">Status of Voters</p><hr/>
+	      			<canvas id="voters"></canvas>
+	      			</div>
+	      			<div class="col s4">
+	      				<table class="table table-bordered">
+	      				  <thead>
+	      				    <tr>
+	      				      <th>Candidate</th>
+	      				      <th>Votes</th>
+	      				    </tr>
+	      				  </thead>
+	      				  <tbody id ="tallyVotesTableData">
+	      				  </tbody>
+	      				</table>
+	      			</div>
+	      		</div>
+
+	      <!-- end of tally votes content -->
+	  	  </div>
+	      <div id="test6" class="col tab-content">
+	      <!-- start of settings -->
+	      	<h4 class="orange-text lighten-5">Change Admin Password</h4>
+	      	<form class="col s12">
+	      		<div class="row">
+	      			<div class="input-field col s12">
+	      			    <input id="Cpass" type="text" class="validate">
+	      			    <label for="Cpass">Current Password</label>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      			<div class="input-field col s12">
+	      			    <input id="Npass" type="password" class="validate">
+	      			    <label for="Npass">New Password</label>
+	      			</div>
+	      		</div>
+	      		<div class="row">
+	      			<div class="input-field col s12">
+	      			    <input id="CNpass" type="password" class="validate">
+	      			    <label for="CNpass">Confirm New Password</label>
+	      			</div>
+	      		</div>
+	      	</form>
+	  	  </div> <!-- end of settings-->
+	    </div> <!-- end of content div -->
+	  </div> <!-- end of row div -->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="../index.js"></script>
+	<!-- <script src="js/materialize.js"></script> -->
+	<script type="text/javascript">
+			var ctx = document.getElementById("votesCount").getContext('2d');
+				var myChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: {
+				        labels: [""],
+				        datasets: [{
+				            label: '# of Votes',
+				            data: [],
+				            backgroundColor: [
+				                'rgba(255, 99, 132, 0.2)',
+				                'rgba(54, 162, 235, 0.2)',
+				                'rgba(255, 206, 86, 0.2)',
+				                'rgba(75, 192, 192, 0.2)',
+				                'rgba(153, 102, 255, 0.2)',
+				                'rgba(255, 159, 64, 0.2)'
+				            ],
+				            borderColor: [
+				                'rgba(255,99,132,1)',
+				                'rgba(54, 162, 235, 1)',
+				                'rgba(255, 206, 86, 1)',
+				                'rgba(75, 192, 192, 1)',
+				                'rgba(153, 102, 255, 1)',
+				                'rgba(255, 159, 64, 1)'
+				            ],
+				            borderWidth: 1
+				        }]
+				    },
+				    options: {
+				        scales: {
+				            yAxes: [{
+				                ticks: {
+				                    beginAtZero:true
+				                }
+				            }]
+				        }
+				    }
+				});
+			var firstload =true;
+			function updateCharts(candidate){
+				//console.log(candidate);
+				//console.log(candidate.candidateName);
+				console.log("updated");
+				if(firstload){ 
+					myChart.data.labels.pop();
+
+					for(i=0;i<candidate.no;i++){
+						let c = candidate.candidateName[i].replace(/[^a-zA-Z ]/g, "");
+						//console.log(c+candidate.votes);
+						if(firstload)
+						myChart.data.labels.push(candidate.candidateName[i]);
+
+					    myChart.data.datasets.forEach((dataset) => {
+					    	if(!firstload) {dataset.data.pop();}else{
+						    	if(candidate.votes[i]==''){
+						       		dataset.data.push(0);
+						    	}else{
+						       		dataset.data.push(parseInt(candidate.votes[i]));
+						        }
+						    }
+				    	});
+					}
+				}
+				else{
+					for(i=0;i<candidate.no;i++){
+						myChart.data.datasets[0].data[i]= parseInt(candidate.votes[i]);
+					}
+				}
+
+				firstload=false;
+			    myChart.update();
+			}
+	</script>
+</body>
+</html>

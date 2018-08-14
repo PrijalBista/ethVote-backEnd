@@ -1,256 +1,213 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-	<title>VOte</title>
-	<style type="text/css">
-		.first-two-blocks{
-			background: linear-gradient( rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52) ), url('images/14.jpg');
-			border-radius: 5px;
-		}
-		/*carousel-inner,margin:auto will center the images in the carousel*/
-		.carousel-inner img {
-  			margin: auto;
-		}
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EthVote BackEnd</title>
 
-		.myclass{
-			background-color: #eee;
-			margin:3%;
-			padding:1%;
-			border-radius: 8px;
-
-		}
-	</style>
-
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">EthVote</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#aboutUs">About US</a></li>
+      </ul>
 
-<nav class="navbar navbar-inverse" style="border-radius: 0px;">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle btn btn-default" data-toggle="collapse" data-target="#thenavbarmenu">
-			<span class="icon-bar"></span>
-        	<span class="icon-bar"></span>
-       		<span class="icon-bar"></span> 
-		</button>
-		<a class="navbar-brand" href="#" ><span class="glyphicon glyphicon-road"></span>
-		VOte</a>
-	</div>
-	<div class="collapse navbar-collapse" id="thenavbarmenu">
-	<ul class="nav navbar-nav">
-	 <li><a href="#">Home</a></li>
-	 <li><a href="">About</a></li>
-	 <li><a href="">Profile</a></li>
-	 <!-- <form class="navbar-form pull-right" method="POST" action="">
-	 	<div class="input-group">
-	 	<input class="form-control" placeholder="Search In This sIte" />
-	 	<div class="input-group-btn">
-	 	<button class="btn btn-info"> <i class="glyphicon glyphicon-search"></i></button></div>
-	 	</div>
-	 </form> -->
-	</ul>
-	<ul class="nav navbar-nav pull-right">
-		<!-- <li><button  class="btn btn-success navbar-btn" style="margin-right: 2px;" data-toggle="modal" data-target="#loginmodal">
-		<span class="glyphicon glyphicon-log-in"></span> Login</button></li>
-	 	-<li><button  class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#registermodal"> 
-	 	<span class="glyphicon glyphicon-user"></span> Register</button></li>
-	 	<li><button  class="btn btn-success navbar-btn" style="margin-right: 2px;" data-toggle="modal" data-target="#loginmodal">   -->
-	 	</ul>
-	</div>
-</nav>
-<div id="loginmodal" class="modal fade">
-	<div class="modal-dialog modal-sm">
-	<div class="modal-content">
-		<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<h3  class="modal-title">Login</h3>
-		</div>
-		<div class="modal-body">
-		<form action="./test.php" method="post">
-			
-			<div class="input-group">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-			<input type="text" class="form-control" name= "usrname"/>
-			</div>
-			
-			<div class="input-group">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-			<input type="password" class="form-control" name="passwd" />
-			</div><br>
-			<button type ="submit" class="btn btn-success">Login</button>
-		</form>
-		</div>
-	</div>
-	</div>
-</div>
-<div id="registermodal" class="modal fade" >
-	<div class="modal-dialog modal-lg">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h3  class="modal-title">Register</h3>	
-		</div>
-		<div class="modal-body">
-			<form action="" method="post">
-			<div class="form-group">
-				<p class="form-control-static">Name</p>
-				<input type="text" class="form-control"/>
-				<p class="form-control-static">Email</p>
-				<input type="text" class="form-control"/>
-				<p class="form-control-static">Password</p>
-				<input type="text" class="form-control"/><br>
-				<button type ="submit" class="btn btn-danger">Submit</button>
-			</div>
-			</form>
-		</div>
-	</div>
-	</div>
-</div>
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">SignIn</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
 
-<div class="container-fluid">
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">EthVote</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">A digital voting system designed using blockchain technology</h5>
+        </div>
+        <div class="row center">
+          <a href="#loginModal" id="signIn" class="btn-large waves-effect waves-light teal lighten-1 modal-trigger">Sign In</a>
+        </div>
+        <br><br>
 
-<div class="row">
-<div class="col-md-12 col-xs-12">
-<h1 class="text-center text-danger" >Voting System Management</h1><br>
-</div>
-<br><br><br><br>	
-<div class="jumbotron">
-	<ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#createBallot">Create Ballot</a></li>
-  <li><a data-toggle="tab" href="#manageVoters">Manage Voters and Votes</a></li>
-  <li><a data-toggle="tab" href="#tallyVotes">Tally Votes</a></li>
-  <li><a data-toggle="tab" href="#castVotes">Cast Votes</a></li>
-  <li><a data-toggle="tab" href="#ballotInfo">Ballot Info</a></li>
-</ul>
-
-<div class="tab-content">
-  <div id="createBallot" class="tab-pane fade in active">
-    <h3>Create Ballot</h3>
-<form action="/createballot" method="post">
-			<div class="form-group">
-				<p class="form-control-static">Ballot Name No spaces</p>
-				<input type="text" class="form-control" name="ballotName" />
-				<p class="form-control-static">Candidates Name separated by comma</p>
-				<input type="text" class="form-control" name="candidateNames"/>
-
-				<button type ="submit" class="btn btn-danger">Create Ballot</button>
-			</div>
-</form>
-  </div>
-  <div id="castVotes" class="tab-pane fade">
-    <h3>Cast Vote</h3>
-    <p>Write the name of candidate and voter address</p>
-	<div class="form-group">
-    <p class="form-control-static">Candidate Name</p>
-	<input id="voteCandidateName" type="text" class="form-control" name="candidateName"/>
-	</div>
-	<div class="form-group">
-	<p class="form-control-static">Ballot Name</p>
-	<input id="ballotName" type="text" class="form-control" name="ballotName"/>
-	</div>
-	<div class="form-group">
-  	<label for="voterAddress">Voters Address(OPTIONAL)</label>
-  	<input id="=voterAddress" tyse="text" class="form-control" name ="voterAddress"/>
-	</div>
-	<a href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>
+      </div>
+    </div>
+    <div class="parallax"><img src="images/index/background1.jpg" alt="Unsplashed background img 1"></div>
   </div>
 
 
-  <div id="manageVoters" class="tab-pane fade">
-  	<br><br>
-  	<h4>Registered Voters </h4>
-	<div>
+  <div class="container">
+    <div class="section">
 
-		<table class="table table-striped table-responsive">
-					<thead>
-						<tr>
-							<th>FullName</th>
-							<th>Username</th>
-							<th>Address</th>
-							<th>DateOfBirth</th>
-							<th>Joined</th>
-							<th>Status</th>
-							<th>Confirmation</th>
-						</tr>
-					</thead>
-					<tbody>
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">security</i></h2>
+            <h5 class="center">More Security in Vote Storage</h5>
 
-						<% result.forEach(function(dat){ %>
-							<tr>
-							<td> <%= dat.name %> </td>
-							<td> <%= dat.username %> </td>
-							<td> <%= dat.address %> </td>
-							<td> <%= dat.dob %> </td>
-							<td> <%= dat.joined %> </td>
-							<% if ( dat.groups==0) {%>
-					<td><span id="1<%= dat.username %>">Not validated(can't Vote)</span></td>
-							<%} else {%>
-					<td><span id="1<%= dat.username %>">Validated (can Vote)</span></td>
-							<%}%>
-							<td> 
-								<button class="btn btn-primary" id="<%= dat.username %>"
-							onclick="validateVoter('<%= dat.username %>',this)" value = "<%= dat.groups %>">
-								<% if ( dat.groups==0) {%>
-								Enable Voting
-								<%} else {%>
-								Disable Voting
-								<%}%>
+            <p class="light">Since we use the blockchain to store the votes in the form of a contract in blockchain the votes are secured. Its amlost imposible (present context) to change or manipulate the data stored in blockchain making votes fair and secure.</p>
+          </div>
+        </div>
 
-								</button>
-							</td>
-							</tr>
-						<% }); %>
-					</tbody>
-		</table>
-	</div>
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">User Experience Focused</h5>
 
-<br><br>
-	<div class="jumbotrom">
-		<span id = "votingStatus">......</span>
-	</div>
-	<button type ="submit" onclick="startVoting()" class="btn btn-success">Start Voting</button>
-	<button type ="submit" onclick="stopVoting()" class="btn btn-danger">End Voting</button>
-	</div>
+            <p class="light">This system will enable voters to vote from their mobile. Despite some of the security factors mobile voting can increase the no of partipants as that of paper based voting. As of this period no of mobile users are increasing so more people can be reached from this type of voting system. Especially the younger generation that ignore/avoid paper based voting can be attracted and persuaded using this type of voting which will help for better selection of individual for any election, small or large</p>
+          </div>
+        </div>
 
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Easy to work with</h5>
 
-  <div id="tallyVotes" class="tab-pane fade">
-    <h3>Tally Vote</h3>
-	<button onclick="tallyVotes()" class="btn btn-danger">Tally Votes</button>
-    <p></p><br>
-    <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Candidate</th>
-          <th>Votes</th>
-        </tr>
-      </thead>
-      <tbody id ="tallyVotesTableData">
-      </tbody>
-    </table>
+            <p class="light">We plan to built user friendly and interactive mobile application so it will be easy enough for any mobile user(androids) to understand and fully use the app.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Propose an Alternative to present Electronic Voting system</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="images/index/background2.jpg" alt="Unsplashed background img 2"></div>
   </div>
-  <div id="ballotInfo" class="tab-pane fade">
-   		<h3>BallotInfo</h3>
-    	<p>Here are your ballots u posted</p>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row" id="aboutUs">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send brown-text"></i></h3>
+          <h4>About Us</h4>
+          <p class="left-align light">
+            We are a group of Coputer Engineering Students (BCT) trying to remove on of the factors of implementing digital voting. Its Security of votes. Present implementations of internet voting requires a central or distributed database that had to hold the votes. However the flaw in this approach is the possibility of the database being hacked, or change in votes for someones benifits, or the authority in control of these database tampering with these sensitive datas for their benifit. 
+          </p>
+          <p class="left-align light">
+            So we developed a internet voting system that stores votes in a special database , blockchain database. Blockchain database are special in that information they store are immutable.This enables the integrity of the votes. However using blockchain for this brings other complexities as well that we have tried to remove to make a rubust proof of concept system to show this is possible.
+          </p>
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
 
 
-<br><br>
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light"></h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="images/index/background3.jpg" alt="Unsplashed background img 3"></div>
+  </div>
 
-<br><br>
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">BCT C</h5>
+          <p class="grey-text text-lighten-4">We are a team of college students working on this project.</p>
 
 
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+<!--           <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul> -->
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Amar Nath Chaudhary</a></li>
+            <li><a class="white-text" href="#!">Prijal Bista</a></li>
+            <li><a class="white-text" href="#!">Shree Krishna Pandey</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      <p>All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Structure -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <a href="#!" class="modal-close right">
+        <i class="material-icons prefix">close</i>
+      </a>
+      <h4>Sign In</h4>
+      <p>(First Time? use username:admin pass:admin)</p>
+      <form method="post" action="/adminLogin">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">account_circle</i>
+            <input placeholder="Username" name="username" id="first_name" type="text" required="true" class="validate" autofocus="true">
+            <label for="first_name">Username</label>
+          </div>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock</i>
+            <input name="password" id="last_name" type="password" required="true" class="validate">
+            <label for="last_name">Password</label>
+          </div>
+        </div>
+        <div class="input-field">
+          <button class="btn waves-effect waves-light teal lighten-1" type="submit">Sign In</button>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      
+    </div>
+  </div>
 
 
-</body>
-<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
-<script src="http://code.dappbench.com/browser-solc.min.js" type="text/javascript"></script>
-<script src="./index.js"></script>
+  <!--  Scripts-->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <!-- model ko  opening script -->
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+       var elems = document.querySelectorAll('.modal');
+       //var instances = M.Modal.init(elems, options);
+     });
+
+     // Or with jQuery
+
+     $(document).ready(function(){
+       $('.modal').modal();
+     });
+             
+  </script>
+
+  </body>
 </html>

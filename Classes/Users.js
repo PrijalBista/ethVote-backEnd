@@ -70,15 +70,13 @@ class Users{
 		//});	
 	}
 
-	GetVotersList(request,response){
+	GetVotersList(request,response,next){
 		//manage voters section 
 		 this.connection.query("SELECT * FROM users",function(err,result,fields){
 		// 	//fields has info about all datas (eg if they are char, int , length,etc)	
 			//console.log('from GetVotersList function i:D:D'+candidatesInfo.no);
-			if(err) throw err;	
-			response.render('index',{result:result,candidate:null});
-			response.end();
-
+			if(err) throw err;
+			next(result);	
 	 });
 	}
 

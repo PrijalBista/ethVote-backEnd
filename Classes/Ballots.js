@@ -13,7 +13,7 @@ class Ballots{
 
 	}
 
-	addBallot(ballotName,ballotAddress){
+	addBallot(ballotName,ballotAddress,admin_id){
 		let created = new Date();//current timestamp
 		//let filename = ballotName+Date.parse(created).toString();
 		let filename = ballotName;//file name of generated key files (public and private)
@@ -21,6 +21,7 @@ class Ballots{
 			let sql = 'INSERT INTO ballots SET ?';
 			let values ={
 				ballotName:ballotName,
+				admin_id:admin_id,
 				ballotAddress:ballotAddress,
 				creationDate:created.toLocaleString()
 			};
@@ -46,7 +47,13 @@ class Ballots{
 		}
 	}
 
-
+	getBallots(admin_id,next){
+		let sql = 'SELECT * FROM ballots WHERE admin_id= ?';
+		this.connection.query(sql,admin_id,function(err,result,field){
+			if(err) throw err;
+			next(result);
+		});
+	}
 
 }
 

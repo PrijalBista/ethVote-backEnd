@@ -36,6 +36,7 @@ class Blockchain{
 		//VotingContract = new web3.eth.contract(abiDefinition);
 		var VotingContract = this.web3.eth.contract(abiDefinition);
 	  	var byteCode = compiledCode.contracts[':Voting'].bytecode;
+	  	var selfobj = this;
 	  	var deployedContract=VotingContract.new(ballotName,candidateNames,{data: byteCode, from: this.web3.eth.accounts[0], gas: 4700000},function(err,contract){
 	  		if(!err){
 	  			//NOTE: the callback will fire twice
@@ -45,8 +46,10 @@ class Blockchain{
 	  				//console.log("transaction hash "+contract.transactionHash);
 	  			}else{
 	  				console.log('Contract Deployed Successfully address: '+contract.address);
-	  				ballots.addBallot(ballotName,contract.address);
-	  				response.redirect("/manager");
+	  				ballots.addBallot(ballotName,contract.address,request.session.user_id);
+	  				selfobj.contractInstance=contract;
+	  				selfobj.ballotName=ballotName;
+	  				//response.redirect("/admin/manager");	
 	  				callback(contract);
 	  			}
 	  		}else{
@@ -55,9 +58,21 @@ class Blockchain{
 	  			return null;
 	  		}
 	  	});
-	  	this.contractInstance=deployedContract;
-	  	this.ballotName=ballotName;
+	  	// this.contractInstance=deployedContract;
+	  	// this.ballotName=ballotName;
 	  	//console.log('blockchain instance'+ this.contractInstance);
+	}
+
+	selectContract(ballotName,contractAddress){
+		  		var code = fs.readFileSync(__dirname+'/../Contracts/Voting.sol').toString();
+
+		  		var compiledCode = solc.compile(code);
+			  	var abiDefinition = JSON.parse(compiledCode.contracts[':Voting'].interface);
+				var VotingContract = this.web3.eth.contract(abiDefinition);
+				this.contractInstance = VotingContract.at(contractAddress);
+				this.ballotName = ballotName;
+				console.log("selected ballot"+ballotName+this.contractInstance.address);
+				return true;
 	}
 
 
@@ -140,8 +155,10 @@ class Blockchain{
 			votes[i] = this.contractInstance.totalVotesFor(candidates[i]);
 			if(mykey!==null){
 				votes[i]=mykey.decrypt(votes[i]);
+				// votes[i]= parseInt(votes[i]);
 			}
 			candidates[i] = this.web3.toAscii(candidates[i]).toLocaleString();
+			candidates[i] = candidates[i].replace(/[^a-zA-Z ]/g, "");
 		}
 		
 		//return an obj with member datas candidates and votes which are arrays
