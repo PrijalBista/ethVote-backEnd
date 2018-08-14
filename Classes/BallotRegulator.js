@@ -94,8 +94,8 @@ class BallotRegulator{
 
 	RequestForBallot(request,response){
 		var candidatesInfo = null;
-		if(this.contractInstance[this.user_id]!==null){
-			candidatesInfo = blockchain[request.session.user_id].GetCandidateList();
+		if(this.contractInstance[this.user_id]!==null && blockchain[this.user_id]){
+			candidatesInfo = blockchain[this.user_id].GetCandidateList();
 			response.send({'success':true,'message':candidatesInfo.candidateName});
 		//load all candidates and there votes in real time	
 		} else{
